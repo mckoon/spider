@@ -1,0 +1,68 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '2.0.0'
+}
+
+group 'net.mckoon'
+version '1.0.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+shadowJar {
+
+    dependsOn build
+
+    baseName = 'spider'
+    classifier = null
+    version = null
+}
+
+jar {
+    manifest {
+        attributes(
+                'Implementation-Title': 'McKoon Spider',
+                'Implementation-Version': version,
+                'Main-Class': 'net.mckoon.spider.Main'
+        )
+    }
+}
+
+dependencies {
+
+    compile ('ch.qos.logback:logback-classic:1.2.3')
+    compile ('com.google.code.findbugs:jsr305:3.0.2')
+    compile ('com.google.guava:guava:22.0')
+    compile ('com.google.inject:guice:4.1.0')
+    compile ('com.typesafe:config:1.3.2')
+    compile ('org.apache.commons:commons-lang3:3.5')
+
+    /* Metrics. */
+    compile ('io.dropwizard.metrics:metrics-core:4.0.0')
+    compile ('com.palominolabs.metrics:metrics-guice:3.3.0')
+
+    /* Jsoup. */
+    compile ('org.jsoup:jsoup:1.11.2')
+
+    /* Jackson. */
+    compile ('com.fasterxml.jackson.core:jackson-annotations:2.9.3')
+    compile ('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.3')
+    compile ('com.fasterxml.jackson.datatype:jackson-datatype-guava:2.9.3')
+
+    /* Elasticsearch. */
+    compile('org.elasticsearch.client:transport:6.1.2')
+    compile('org.apache.logging.log4j:log4j-to-slf4j:2.9.1')
+
+    /* Unit testing. */
+    testCompile ('org.mockito:mockito-core:2.+')
+    testCompile ('org.testng:testng:6.11')
+
+}
+
+test {
+    useTestNG()
+}
